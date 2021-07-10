@@ -1,0 +1,13 @@
+pip~=20.2.2
+py~=1.10.0
+typing~=3.7.4.3
+requests~=2.25.1
+certifi~=2020.12.5
+chardet~=4.0.0
+urllib3~=1.26.5
+six~=1.15.0
+idna~=2.10
+setuptools~=41.2.0
+Django~=3.2.4
+playsound~=1.2.2
+win10toast~=0.9

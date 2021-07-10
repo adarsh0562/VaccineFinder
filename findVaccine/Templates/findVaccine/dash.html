@@ -1,0 +1,85 @@
+{% extends 'findVaccine/index.html' %}
+{% load static %}
+{% block title %}Dash {% endblock %}
+{% block formCSS %} {% endblock%}
+{% block body %}{%endblock%}
+{% block topnavbar %}
+<nav class="fixed-top titleColor">
+    <div class="page-title w3-center">
+        <a href="{% url 'basePage'%}" style="text-decoration:none;">
+        <img src="{% static '/findVaccine/images/icons/left-arrow.png'%}" class="back_btn w3-left">
+        </a>
+        <span>Find Vaccine <a><i class="fa fa-bell"></i></a></span>
+
+    </div>
+</nav>
+{% endblock %}
+{%block form%}
+<style>
+    body
+    {
+        background-image:url({% static 'images/1.jpg'%});
+        background-attachment:fixed;
+        background-size:cover;
+    }
+</style>
+<div class="container marginTop">
+    <form class="form Search-section" method="post" action="{%url 'byPincode'%}">{% csrf_token %}
+                <div class="form-group">
+                    <input type="number" value="{{pincode}}" name="pincode" placeholder="Search by pincode" class="w3-input" style="text-align:center" onKeyPress="if(this.value.length==6) return false;" required>
+                </div>
+                <div class="form-group">
+                    <input type="date" value="{{date}}" name="date" id="dateField" class="w3-input" required>
+                </div>
+                <div class="form-group radioBtns">
+                    <input type="radio" class="w3-check" name="age" value="18"  > 18+ {%comment%}{%if age == '18' %}checked{%endif%}{%endcomment%}
+                        &nbsp;
+                    <input type="radio" class="w3-check" name="age" value="45" > 45+
+                </div>
+                <div class="form-group">
+                    <center>
+                        <input type="submit" class="btn btn-primary">
+                    </center>
+                </div>
+    </form>
+</div>
+
+<div class="container w3-padding">
+    <h4 class="w3-center text-white">All Available Centers</h4><hr>
+    <div class="row">
+        {%if data %}
+        {% for each in data %}
+            {% if each.available_capacity >= 0 and each.min_age_limit == age %}
+                <div class="cols col-md-6 col-sm-12">
+                    <div class="box">
+                        <h4 class="centerName">{{each.name}}</h4><hr class="w3-border">
+
+                        <img class="w3-right circle" src="{% static 'findVaccine/images/icons/circle.svg'%}">
+                        <p class="">Address : {{each.address}}</p>
+                        <table>
+                            <tr>
+                                <td >Pincode : <span class="w3-text-red">{{each.pincode}}</span></td>
+                                <td>Vaccine : <span class="w3-text-red">{{each.vaccine}}</span></td>
+                            </tr>
+                            <tr>
+                                <td>Dose 1 Qty: <span class="w3-text-red">{{each.available_capacity_dose1}}</span></td>
+                                <td>Dose 2 Qty: <span class="w3-text-red">{{each.available_capacity_dose2}}</span></td>
+                            </tr>
+                        </table>
+                        <center>
+                            <a href="https://selfregistration.cowin.gov.in/" target="_blank" class="btn btn-primary bookSlot">Book Slot?</a>
+                        </center>
+                        <span class="personAge w3-right">{{each.min_age_limit}}+</span>
+
+                    </div>
+                </div>
+            {%endif%}
+
+        {%endfor%}
+        {%endif%}
+    </div>
+</div>
+<div class="marginTop">
+
+</div>
+{% endblock %}
