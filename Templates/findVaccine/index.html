@@ -17,7 +17,49 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="{% static '/findVaccine/css/style.css' %}">
 	{% block formCSS %}<link rel="stylesheet" type="text/css" href="{% static 'findVaccine/css/form.css'%}">{%endblock%}
+<script>
+	function getOTP(mobile)
+	{
+	if (mobile.value.length != 0)
+	{
+		if (mobile.value.length == 10)
+		{
+			document.getElementById("alert").style.display = "none";
+			states = new XMLHttpRequest();
+			states.open('GET','/findVaccination/generate_otp/?mobile='+mobile.value, true);
+			states.send();
+			states.onreadystatechange = function()
+			{
+				if(this.readyState == 4 && this.status == 200)
+				{
+					obj = this.responseText;
 
+					if (obj)
+					{
+						document.getElementById("alert").style.display = "block";
+						document.getElementById("alertType").innerHTML = "otp sent successful -"+obj;
+					}
+					else{
+						document.getElementById("alert").style.display = "none";
+					}
+				}else
+				{
+					document.getElementById("alert").style.display = "block";
+					document.getElementById("alertType").innerHTML = "Technical Error";
+				}
+			};
+		}else
+		{
+			document.getElementById("alert").style.display = "block";
+			document.getElementById("alertType").innerHTML = "Invalid Mobile";
+		}
+    }else
+		{
+			document.getElementById("alert").style.display = "block";
+			document.getElementById("alertType").innerHTML = "Mobile is Required";
+		}
+}
+</script>
 </head>
 <body {% block body %}{%endblock%}>
 {% block topnavbar %}
@@ -47,6 +89,12 @@
                         </div>
                     {%endif%}
                 {%endfor%}
+				<div id="alert" style="display:none">
+					<div class="alert alert-danger alert-dismissible w3-animate-top">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+							<span id="alertType"></span>
+					</div>
+				</div>
            		<div class="input-div one">
            		   <div class="i">
            		   		<i class="fas fa-user"></i>
@@ -66,7 +114,7 @@
 <!--           		    	<input type="number" class="input" name="mobile">-->
 						<h5>{{ form.mobile.label_tag }}</h5>
 					   	{{ form.mobile }}
-					   <button type="button" class="btn verify-btn" id="otpButton">Verify</button>
+					   <button type="button" class="btn verify-btn" id="otpButton" onclick="getOTP(id_mobile);">Get OTP</button>
 				   </div>
             	</div>
 
@@ -81,7 +129,7 @@
 					   	{{ form.otp }}
 				   </div>
             	</div>
-            	<input type="submit" class="btn" value="Login">
+            	<input type="submit" class="btn" value="Verify & Login">
             </form>
         </div>
     </div>

@@ -23,6 +23,7 @@ urlpatterns = [
     path('generate_otp/',views.generateOtpApi),
     path('dashboard_page/',views.dashboard,name="dashPage"),
     path('search-by-pincode/',views.byPincode,name="byPincode"),
+    path('logout/',views.logout,name="logout")
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

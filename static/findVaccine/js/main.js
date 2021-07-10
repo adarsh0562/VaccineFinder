@@ -19,5 +19,5 @@ inputs.forEach(input => {
 	input.addEventListener("blur", remcl);
 });
 
-// Data Picker Initialization
-$('.datepicker').datepicker();
+
+

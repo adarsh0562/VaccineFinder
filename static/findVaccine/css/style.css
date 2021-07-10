@@ -41,8 +41,7 @@
 
 /* working on headers   */
 .titleColor{
-	background-image: linear-gradient(to right, #32be8f, #38d39f, #32be8f);
-
+background-color:#2FD69A;
 }
 .page-title{
     padding:15px 40px;
@@ -55,7 +54,14 @@
     font-weight:bold;
     font-size:25px;
 }
-
+.sideBox{
+background:white;
+border:2px solid red;
+font-size:20px;
+font-weight:bold;
+margin-bottom:30px;
+margin-top:68px;
+}
 /*   end Headers parts */
 
 .marginTop

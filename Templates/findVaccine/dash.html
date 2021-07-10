@@ -9,7 +9,7 @@
         <a href="{% url 'basePage'%}" style="text-decoration:none;">
         <img src="{% static '/findVaccine/images/icons/left-arrow.png'%}" class="back_btn w3-left">
         </a>
-        <span>Find Vaccine <a><i class="fa fa-bell"></i></a></span>
+        <span class="w3-center">Find Vaccine <a><i class="fa fa-bell "></i></a></span>
 
     </div>
 </nav>
@@ -23,7 +23,17 @@
         background-size:cover;
     }
 </style>
-<div class="container marginTop">
+<center>
+<div class="sideBox">
+    <table>
+        <tr class="w3-right">
+            <th>Welcome {{name}} &nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;</th>
+            <th class="w3-text-red"><a href="{%url 'logout'%}">Log out</a></th>
+        </tr>
+    </table>
+</div>
+</center>
+<div class="container">
     <form class="form Search-section" method="post" action="{%url 'byPincode'%}">{% csrf_token %}
                 <div class="form-group">
                     <input type="number" value="{{pincode}}" name="pincode" placeholder="Search by pincode" class="w3-input" style="text-align:center" onKeyPress="if(this.value.length==6) return false;" required>
@@ -49,7 +59,7 @@
     <div class="row">
         {%if data %}
         {% for each in data %}
-            {% if each.available_capacity >= 0 and each.min_age_limit == age %}
+            {% if each.available_capacity > 0 and each.min_age_limit == age %}
                 <div class="cols col-md-6 col-sm-12">
                     <div class="box">
                         <h4 class="centerName">{{each.name}}</h4><hr class="w3-border">

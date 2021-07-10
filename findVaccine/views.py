@@ -2,28 +2,47 @@ from django.shortcuts import render,redirect,reverse
 from django.http import HttpResponse
 from .forms import *
 import requests,json,time
-from playsound import playsound
-from win10toast import ToastNotifier
 from datetime import datetime
+import random
 # Create your views here.
+def loginCHeck(request):
+    try:
+        if request.session["mobile"]:
+            return True
+    except KeyError:
+        return False
 
 def index(request):
+    if loginCHeck(request) == True:
+        return redirect(dashboard)
+
     if request.method=="POST":
         form = loginForm(request.POST)
         if form.is_valid():
-            print(form.cleaned_data)
+            otp = form.cleaned_data["otp"]
+            if int(otp) == int(request.session["otp"]):
+                request.session["name"] = form.cleaned_data["name"]
+                request.session["mobile"] = form.cleaned_data["mobile"]
+                return redirect(dashboard)
+            else:
+                form._errors['otp'] = form.error_class([
+                    'Invalid Otp'])
+                return render(request, "findVaccine/index.html",{'form':form})
 
     else:
         form = loginForm()
     return render(request, "findVaccine/index.html",{'form':form})
 
 def generateOtpApi(request):
-    mobile = request.GET.get('mobile')
-    print(mobile,"00000000000000000")
-    return HttpResponse(mobile)
+    mobile = int(request.GET.get('mobile'))
+    otp = random.randrange(1000,9999)
+    request.session["otp"] = otp
+    print(otp)
+    return HttpResponse(otp)
 
 def dashboard(request):
-    return  render(request, 'findVaccine/dash.html')
+
+    return  render(request, 'findVaccine/dash.html',{"name":request.session["name"]})
 
 def byPincode(request):
     if request.method == "POST":
@@ -39,6 +58,15 @@ def byPincode(request):
         result = requests.get(URL, headers=header)
         response_json = result.json()
         data = response_json["sessions"]
-        #data = json.dumps(data, sort_keys=True, indent=4)
-        return render(request, 'findVaccine/dash.html', {'data': data,'age':int(age),'pincode':pincode,'date':date})
+            #data = json.dumps(data, sort_keys=True, indent=4)
+        return render(request, 'findVaccine/dash.html', {'data': data,'age':int(age),'pincode':pincode,'date':date,'name':request.session["name"]})
     return redirect(dashboard)
+
+def logout(request):
+    try:
+        del request.session["name"]
+        del request.session["mobile"]
+        del request.session["otp"]
+    except KeyError:
+        pass
+    return redirect(index)
