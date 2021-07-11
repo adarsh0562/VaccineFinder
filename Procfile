@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath vaccineFinder vaccineFinder.wsgi
+web: gunicorn vaccineFinder.wsgi --log-file -
