@@ -1,0 +1,79 @@
+{% extends 'naradMuni/login.html'%}
+{%load static%}
+{% block topnavbar %}
+<nav class="fixed-top titleColor">
+    <div class="page-title w3-center">
+        <span>Sign Up</span>
+	</div>
+</nav>
+{% endblock %}
+{%block form%}
+	<img class="wave" src="{% static 'naradMuni/images/wave.png'%}">
+	<div class="container">
+
+		<div class="img">
+			<img src="{% static 'naradMuni/images/bg.svg'%}">
+		</div>
+		<div class="login-content">
+			<form method="post" novalidate>
+				{% csrf_token %}
+                <br><br>
+				<img src="{% static 'naradMuni/images/icons/logo.png'%}">
+				<h2 class="title">Welcome</h2>
+				{% for key, value in form.errors.items %}
+                    {% if forloop.first %}
+                        <div class="alert alert-danger alert-dismissible w3-animate-top">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+							<!--<span>{{key}}</span>-->{{value}}
+                        </div>
+                    {%endif%}
+                {%endfor%}
+				<div id="alert" style="display:none">
+					<div class="alert alert-danger alert-dismissible w3-animate-top">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+							<span id="alertType"></span>
+					</div>
+
+				</div>
+
+           		<div class="input-div pass">
+           		   <div class="i">
+           		    	<i class="fas fa-lock"></i>
+           		   </div>
+           		   <div class="div">
+<!--           		    	<h5>Enter Email</h5>-->
+<!--           		    	<input type="email" class="input" name="email">-->
+					   <h5>{{ form.username.label_tag }}</h5>
+					   		{{ form.username }}
+				   </div>
+            	</div>
+				<div class="input-div pass">
+           		   <div class="i">
+           		    	<i class="fas fa-lock"></i>
+           		   </div>
+           		   <div class="div">
+<!--           		    	<h5>Enter Password</h5>-->
+<!--           		    	<input type="password" class="input">-->
+					   <h5>{{ form.password1.label_tag }}</h5>
+					   		{{ form.password1  }}
+				   </div>
+            	</div>
+                <div class="input-div pass">
+           		   <div class="i">
+           		    	<i class="fas fa-lock"></i>
+           		   </div>
+           		   <div class="div">
+<!--           		    	<h5>Enter Confirm Password</h5>-->
+<!--           		    	<input type="password" class="input">-->
+					   <h5>{{ form.password2.label_tag }}</h5>
+					   		{{ form.password2  }}
+				   </div>
+            	</div>
+            	<input type="submit" class="btn" value="Verify & Login">
+				<div class="div">
+					<h1 class="w3-right"><a href="{%url 'naradMuni_login'%}">Already Registered?</a></h1>
+				</div>
+			</form>
+        </div>
+    </div>
+{% endblock %}

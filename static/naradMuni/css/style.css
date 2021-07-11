@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&display=swap');
+
+/* working on headers   */
+.titleColor{
+background-color:#2FD69A;
+}
+.page-title{
+    padding:15px 40px;
+}
+.page-title .fa-bell{
+    float:right;
+    font-size:30px;
+}
+.page-title span{
+    font-weight:bold;
+    font-size:25px;
+}
+
+.title{
+font-family: 'Carter One', cursive;
+}
