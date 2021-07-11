@@ -59,7 +59,7 @@
     <div class="row">
         {%if data %}
         {% for each in data %}
-            {% if each.available_capacity > 0 and each.min_age_limit == age %}
+            {% if each.available_capacity >= 0 and each.min_age_limit == age %}
                 <div class="cols col-md-6 col-sm-12">
                     <div class="box">
                         <h4 class="centerName">{{each.name}}</h4><hr class="w3-border">

@@ -56,7 +56,10 @@ def byPincode(request):
 
         result = requests.get(URL, headers=header)
         response_json = result.json()
-        data = response_json["sessions"]
+        data = list()
+        for x in response_json:
+            data = response_json[x]
+            print('--------',data)
             #data = json.dumps(data, sort_keys=True, indent=4)
         return render(request, 'findVaccine/dash.html', {'data': data,'age':int(age),'pincode':pincode,'date':date,'name':request.session.get("name")})
     return redirect(dashboard)
