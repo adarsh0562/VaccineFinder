@@ -47,7 +47,7 @@ def logoutPage(request):
 def getNews(request):
     dt = datetime.date.today()
     day = dt.strftime("%A, %B %d, %Y")
-    keyword = request.GET.get("keyword", "india")
+    keyword = "india"
     newsapi = NewsApiClient(api_key='d09c32eb260a43fcb5ab6bf6a6fdb3b0')
     all_articles = newsapi.get_everything(q='{}'.format(keyword),
                                           from_param='{}'.format(date.today() - timedelta(1)),
@@ -94,7 +94,7 @@ def contactusPage(request):
     if request.user.is_authenticated:
         dt = datetime.date.today()
         day = dt.strftime("%A, %B %d, %Y")
-        keyword = request.GET.get("keyword", "india")
+        keyword = "india"
         newsapi = NewsApiClient(api_key='d09c32eb260a43fcb5ab6bf6a6fdb3b0')
         top_headlines = newsapi.get_top_headlines(q='{}'.format(keyword),
                                                   category='general',
